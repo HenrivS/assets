@@ -1,0 +1,82 @@
+{% extends "template.html" %}
+{% block content %}
+<h1>Welcome to HvSAssets</h1>
+<div class="add-task">
+<div class="lead">Add a new asset:</div>
+<form action="{{ url_for('new_asset') }}" method="post" role="form">
+<p>
+{{ form.asset_type.label }}: {{ form.asset_type }}&nbsp; {{ form.asset_descr.label }}: {{ form.asset_descr }}&nbsp;{{ form.install_date.label}}: {{ form.install_date }}&nbsp;{{ form.posted_date.label }}: {{
+form.posted_date }}&nbsp;{{ form.priority.label }}: {{ form.priority}}&nbsp;
+<button class="btn btn-md btn-primary"type="submit">Submit</button></p>
+</form>
+</div>
+<div class="entries">
+<br>
+<br>
+<div class="lead">Open assets</div>
+<br>
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>Asset Type</th>
+<th>Asset Descr</th>
+<th>Install Date</th>
+<th>Posted Date</th>
+<th>Priority</th>
+<th>Posted By</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody>
+{% for o in open_assets %}
+<tr>
+<td>{{ o.asset_type }}</td>
+<td>{{ o.asset_descr }}</td>
+<td>{{ o.install_date }}</td>
+<td>{{ o.posted_date }}</td>
+<td>{{ o.priority }}</td>
+<td>{{ o.poster.name }}</td>
+<td>
+<a href="{{ url_for('delete_asset', asset_id = o.asset_id)}}">Delete</a> -
+<a href="{{ url_for('complete', asset_id = o.asset_id) }}">Close</a>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+<br>
+<br>
+<div class="entries">
+<div class="lead">Closed assets</div>
+<br>
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>Asset Type</th>
+<th>Asset Descr</th>
+<th>Install Date</th>
+<th>Posted Date</th>
+<th>Priority</th>
+<th>Posted By</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody>
+{% for c in closed_assets %}
+<tr>
+<td>{{ c.asset_type }}</td>
+<td>{{ c.asset_descr }}</td>
+<td>{{ c.install_date }}</td>
+<td>{{ c.posted_date }}</td>
+<td>{{ c.priority }}</td>
+<td>{{ c.poster.name }}</td>
+<td>
+<a href="{{ url_for('delete_asset', asset_id = c.asset_id)}}">Delete</a>
+</td>
+</tr>
+{% endfor %}
+<tbody>
+</table>
+</div>
+{% endblock %}

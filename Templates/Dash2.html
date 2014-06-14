@@ -1,0 +1,67 @@
+{% extends "template.html" %}
+{% block content %}
+ <h1>Welcome to HvS Dash2</h1>
+ <a href="/logout">Logout</a>
+ <div class = "add-asset">
+    <h3> Add a new asset </h3>
+    <table>
+        <tr>
+            <form action="{{ url_for ('new_asset') }}" method="post">
+                <td>
+                    <label>asset type:</label>
+                    <input name="asset_type" type="text">
+                </td>
+                <td>
+                    <label>asset description:</label>
+                    <input name="asset_descr" type="text">
+                </td>
+                <td>
+                    <label>installation date:</label>
+                    <input name="install_date" type="text" width="120px">
+                </td>
+                <td>
+                    <label>priority:</label>
+                    <select name = "priority" width=100px>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </td>
+                <td>
+                    &nbsp;
+                    &nbsp;
+                    <input class="button" type="submit" value="Save" >
+                </td>
+            </form>
+        </tr>            
+    </table>
+ </div>
+
+<div class="entries">
+    <h2> Closed Assets:</h2>
+        <div class="datagrid">
+            <table>
+                <thead>
+                    <tr>
+                        <th width="200px"><strong>Asset Type:</strong></th>
+                        <th width="200px"><strong>Asset Descr:</strong></th>
+                        <th width="100px"><strong>Install date:</strong></th>
+                        <th width="50px"><strong>Priority:</strong></th>
+                        <th><strong>Actions:</strong></th>
+                    </tr>
+                </thead>
+                {% for c in display_assets %}
+                    <tr>
+                        <td width="200px">{{ c.type }}</td>
+                        <td width="200px">{{ c.descr }}</td>
+                        <td width="100px">{{ c.date }}</td>
+                        <td width="50px">{{ c.priority }}</td>
+                        <td>
+                            <a href="{{ url_for('delete_asset', asset_id=c.asset_id) }}">Delete</a> 
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+</div>
+{% endblock %}
